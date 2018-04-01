@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf ./dist/build && babel --presets env ./src --out-dir ./dist",
-    "start": "yarn build && node ./dist/index.js",
+    "start": "node ./dist/index.js",
     "start:dev": "nodemon ./src/index.js --exec babel-node --presets env"
   },
   "dependencies": {
