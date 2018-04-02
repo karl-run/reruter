@@ -1,14 +1,30 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-class App extends Component {
+import Frame from './frame/Frame';
+import Info from './info/Info';
+import asyncComponent from './utils/asyncComponent';
+
+import baseStyles from './AppStyles';
+
+const AsyncRealtime = asyncComponent(() => import('./realtime/Realtime'));
+
+const NoMatch = () => <div>Fant ikke siden du prøvde å nå.</div>;
+
+class App extends PureComponent {
   render() {
+    baseStyles();
+
     return (
-      <div style={{ margin: '16px' }}>
-        <h1>Reruter</h1>
-        <p>
-          Mer informasjon kommer. Gå til <a href={`https://${process.env.REACT_APP_API_URL}`}>API-et</a>.
-        </p>
-      </div>
+      <BrowserRouter>
+        <Frame>
+          <Switch>
+            <Route exact path="/" component={Info} />
+            <Route exact path="/realtime" component={AsyncRealtime} />
+            <Route component={NoMatch} />
+          </Switch>
+        </Frame>
+      </BrowserRouter>
     );
   }
 }
