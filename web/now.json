@@ -2,6 +2,7 @@
   "name": "reruter-web",
   "alias": "reruter.cloud",
   "public": false,
+  "token": "$NOW_TOKEN",
   "env": {
     "REACT_APP_API_URL": "api.reruter.cloud"
   }
