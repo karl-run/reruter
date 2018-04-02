@@ -1,8 +1,8 @@
 {
-    "name": "reruter-web",
-    "alias": "reruter.cloud",
-    "public": false,
-    "env": {
-      "API_URL": "https://api.reruter.cloud"
-    }
+  "name": "reruter-web",
+  "alias": "reruter.cloud",
+  "public": false,
+  "env": {
+    "API_URL": "api.reruter.cloud"
   }
+}

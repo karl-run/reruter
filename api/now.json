@@ -1,5 +1,8 @@
 {
-    "name": "reruter-api",
-    "alias": "api.reruter.cloud",
-    "public": false
+  "name": "reruter-api",
+  "alias": "api.reruter.cloud",
+  "public": false,
+  "env": {
+    "API_URL": "api.reruter.cloud"
   }
+}

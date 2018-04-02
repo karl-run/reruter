@@ -12,6 +12,7 @@ const rootResolver = {
 
   Mutation: {
     example: (_, data) => {
+      log.debug('Publishing message for example:' + data.message);
       pubSub.publish(EXAMPLE, {
         exampleSub: data.message,
       });

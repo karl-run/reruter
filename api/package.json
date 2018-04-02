@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf ./dist/build && babel --presets env ./src --out-dir ./dist",
-    "start": "node ./dist/index.js",
-    "start:dev": "nodemon ./src/index.js --exec babel-node --presets env"
+    "start": "cross-env NODE_ENV=production node ./dist/index.js",
+    "start:dev": "nodemon ./src/index.js --exec babel-node --presets env",
+    "deploy": "now && now alias && now rm reruter-api --safe --yes"
   },
   "dependencies": {
     "apollo-server-express": "^1.3.2",
@@ -25,7 +26,8 @@
   },
   "prettier": {
     "singleQuote": true,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "printWidth": 120
   },
   "devDependencies": {
     "babel-preset-env": "^1.6.1",
