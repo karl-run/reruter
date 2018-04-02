@@ -18,7 +18,8 @@
     "start": "yarn serve",
     "start:dev": "react-scripts start",
     "test": "react-scripts test --env=jsdom",
-    "deploy": "now && now alias && now rm reruter-web --safe --yes"
+    "deploy": "now && now alias && now rm reruter-web --safe --yes",
+    "deploy:ci": "now --token $NOW_TOKEN && now alias --token $NOW_TOKEN && now rm reruter-web --token $NOW_TOKEN --safe --yes"
   },
   "prettier": {
     "singleQuote": true,

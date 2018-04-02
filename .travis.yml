@@ -1,0 +1,41 @@
+language: node_js
+node_js:
+  - "8"
+
+cache:
+  yarn: true
+  directories:
+    - web/node_modules
+    - api/node_modules
+
+    
+before_script:
+  - yarn global add now
+
+script: echo "Building and deploying rerouter"
+
+jobs:
+  include:
+    - stage: test
+      script: 
+        - cd web
+        - yarn
+        - yarn test
+        - yarn build
+    - script: 
+        - cd api
+        - yarn
+        - yarn build
+    - stage: deploy
+      script: 
+        - cd web
+        - yarn deploy:ci
+    - script: 
+        - cd api
+        - yarn deploy:ci
+
+stages:
+  - test
+  - name: deploy
+    if: branch = master AND type IN (push)
+
