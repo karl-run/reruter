@@ -3,6 +3,6 @@
   "alias": "reruter.cloud",
   "public": false,
   "env": {
-    "API_URL": "api.reruter.cloud"
+    "REACT_APP_API_URL": "api.reruter.cloud"
   }
 }

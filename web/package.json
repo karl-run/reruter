@@ -13,7 +13,8 @@
     "serve": "serve --single ./build",
     "start": "yarn serve",
     "start:dev": "react-scripts start",
-    "test": "react-scripts test --env=jsdom"
+    "test": "react-scripts test --env=jsdom",
+    "deploy": "now && now alias && now rm reruter-web --safe --yes"
   },
   "prettier": {
     "singleQuote": true,
