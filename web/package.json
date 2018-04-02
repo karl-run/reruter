@@ -14,5 +14,10 @@
     "start": "yarn serve",
     "start:dev": "react-scripts start",
     "test": "react-scripts test --env=jsdom"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "printWidth": 120
   }
 }
