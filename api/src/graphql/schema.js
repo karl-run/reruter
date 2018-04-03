@@ -19,7 +19,7 @@ const typeDefs = `
   }
 
   type Subscription {
-    realtime(stopId: ID!): [Realtime]!
+    realtime(stopId: ID!): [Realtime]
     exampleSub: String
   }
 `;

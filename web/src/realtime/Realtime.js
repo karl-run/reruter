@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { ApolloProvider } from 'react-apollo';
+
+import Screen from './screen/Screen';
+import client from './apollo';
 
 class App extends Component {
   render() {
-    return <div>Kommer snart.</div>;
+    return (
+      <ApolloProvider client={client}>
+        <Screen />
+      </ApolloProvider>
+    );
   }
 }
 
