@@ -8,6 +8,9 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 
 import logging from './logging/logger';
 
+import { getRealtime } from './pollengine/fetcher';
+import { startPolling } from './pollengine';
+
 const DEFAULT_PORT = 4000;
 const PORT = process.env.PORT || DEFAULT_PORT;
 const PROD = process.env.NODE_ENV === 'production';
@@ -23,11 +26,14 @@ app.post('/', bodyParser.json(), graphqlExpress(req => ({ schema })));
 app.get('/', graphiqlExpress({ endpointURL: '/', subscriptionsEndpoint: WS_URL }));
 
 const server = createServer(app);
-server.listen(PORT, () => {
+server.listen(PORT, async () => {
   SubscriptionServer.create({ execute, subscribe, schema }, { server, path: '/subscriptions' });
+
   if (!PROD) {
     log.warn('Not in production');
   }
   log.info(`Started server (${URL}) on port ${PORT}`);
   log.info(`Subscription endpoint: ${WS_URL}`);
+
+  startPolling();
 });

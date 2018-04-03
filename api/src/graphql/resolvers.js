@@ -1,7 +1,5 @@
-import { PubSub, withFilter } from 'graphql-subscriptions';
-
-const EXAMPLE = 'example';
-const pubSub = new PubSub();
+import * as pollEngine from '../pollengine';
+import pubSub, { REALTIME_STOP, EXAMPLE } from '../pollengine/pubsub';
 
 const rootResolver = {
   Query: {
@@ -21,6 +19,14 @@ const rootResolver = {
   },
 
   Subscription: {
+    realtime: {
+      subscribe: (_, { stopId }) => {
+        log.debug('New subscriber for ' + stopId);
+        pollEngine.register(stopId, pubSub);
+        pollEngine.updateStop(stopId, 0);
+        return pubSub.asyncIterator(REALTIME_STOP + stopId);
+      },
+    },
     exampleSub: {
       subscribe: () => pubSub.asyncIterator(EXAMPLE),
     },

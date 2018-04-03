@@ -3,6 +3,7 @@
   "alias": "api.reruter.cloud",
   "public": false,
   "env": {
-    "API_URL": "api.reruter.cloud"
+    "API_URL": "api.reruter.cloud",
+    "RUTER_API_URL": "reisapi.ruter.no"
   }
 }
