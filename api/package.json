@@ -10,7 +10,8 @@
     "start:watch": "nodemon ./dist/index.js",
     "start:dev": "run-p build:watch start:watch",
     "deploy": "now && now alias && now rm reruter-api --safe --yes",
-    "deploy:ci": "now --token $NOW_TOKEN && now alias --token $NOW_TOKEN && now rm reruter-web --token $NOW_TOKEN --safe --yes"
+    "deploy:ci":
+      "now --regions bru --token $NOW_TOKEN && now alias --token $NOW_TOKEN && now rm reruter-api --token $NOW_TOKEN --safe --yes"
   },
   "dependencies": {
     "@babel/cli": "^7.0.0-beta.44",

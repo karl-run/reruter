@@ -2,9 +2,9 @@
   "name": "reruter-api",
   "alias": "api.reruter.cloud",
   "public": false,
+  "regions": ["bru"],
   "env": {
     "API_URL": "api.reruter.cloud",
     "RUTER_API_URL": "reisapi.ruter.no"
-  },
-  "regions": ["bru"]
+  }
 }
