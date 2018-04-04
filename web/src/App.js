@@ -5,7 +5,7 @@ import Frame from './frame/Frame';
 import Info from './info/Info';
 import asyncComponent from './utils/asyncComponent';
 
-import baseStyles from './AppStyles';
+import baseStyles from './AppStyle';
 
 const AsyncRealtime = asyncComponent(() => import('./realtime/Realtime'));
 

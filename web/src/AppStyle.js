@@ -6,6 +6,7 @@ const AppStyles = () => injectGlobal`
 
   html {
     font-family: 'Lato', sans-serif;
+    font-size: 14px;
   }
 
   h1, h2, h3, h4, h5, h6 {
