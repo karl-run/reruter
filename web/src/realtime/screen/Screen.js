@@ -1,15 +1,16 @@
 import React from 'react';
 import { Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from 'react-router-dom';
 import groupBy from 'lodash.groupby';
 import orderBy from 'lodash.orderby';
 import { DateTime } from 'luxon';
 
-import { EntryHeader, LineNumber, LineName, Times, TimelistStyle, SingleTime } from './ScreenStyle';
+import { EntryHeader, LineNumber, LineName, Times, TimelistStyle, SingleTime, ExampleStops } from './ScreenStyle';
 
 const sub = gql`
-  subscription onRealtimeUpdate {
-    realtime(stopId: "3010011") {
+  subscription onRealtimeUpdate($stopId: ID!) {
+    realtime(stopId: $stopId) {
       name
       line
       departure
@@ -53,21 +54,36 @@ const createUniqueIdentifier = time => time.line + ' ' + time.name + ' ' + time.
 const Timelist = ({ times }) => {
   const grouped = groupBy(orderBy(times, 'time'), createUniqueIdentifier);
 
-  console.log(Object.values(grouped));
-
   return (
     <TimelistStyle>{Object.keys(grouped).map(key => <TimeEntry key={key} timeGroup={grouped[key]} />)}</TimelistStyle>
   );
 };
 
-export default () => (
-  <Subscription subscription={sub}>
-    {({ loading, error, data }) => {
-      console.log(loading, error, data);
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>Error :(</p>;
+export default ({ stopId }) => {
+  if (!stopId) {
+    return (
+      <ExampleStops>
+        <h3>Eksempelstopp</h3>
+        <Link to="/realtime/3010011" text>
+          Jernbanetorget
+        </Link>
+        <Link to="/realtime/3012221" text>
+          Berg (ringvei)
+        </Link>
+        <Link to="/realtime/3012220" text>
+          Berg (T-bane)
+        </Link>
+      </ExampleStops>
+    );
+  }
+  return (
+    <Subscription subscription={sub} variables={{ stopId }}>
+      {({ loading, error, data, ...props }) => {
+        if (loading) return <p>Loading...</p>;
+        if (error) return <p>Error :(</p>;
 
-      return <Timelist times={data.realtime} />;
-    }}
-  </Subscription>
-);
+        return <Timelist times={data.realtime} />;
+      }}
+    </Subscription>
+  );
+};

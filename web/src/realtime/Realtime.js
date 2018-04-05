@@ -8,7 +8,7 @@ class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <Screen />
+        <Screen {...this.props.match.params} />
       </ApolloProvider>
     );
   }

@@ -20,7 +20,7 @@ class App extends PureComponent {
         <Frame>
           <Switch>
             <Route exact path="/" component={Info} />
-            <Route exact path="/realtime" component={AsyncRealtime} />
+            <Route exact path="/realtime/:stopId?" component={AsyncRealtime} />
             <Route component={NoMatch} />
           </Switch>
         </Frame>

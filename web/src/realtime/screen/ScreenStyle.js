@@ -37,3 +37,8 @@ export const SingleTime = styled.div`
   margin: 0 4px;
   ${flexCenter};
 `;
+
+export const ExampleStops = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
