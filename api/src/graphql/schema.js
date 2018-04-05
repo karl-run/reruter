@@ -3,6 +3,27 @@ import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 
 const typeDefs = `
+  type Line {
+    number: String!
+    name: String!
+    departures: [String]!
+  }
+
+  type Platform {
+    id: Int!
+    name: String!
+    lines: [Line]!
+  }
+
+  type Stop {
+    #coordinates {
+    #  long: Float
+    #  lat: Float
+    #}
+    name: String!
+    platforms: [Platform]
+  }
+
   type Realtime {
     name: String!
     line: String!
@@ -12,10 +33,12 @@ const typeDefs = `
 
   type Query {
     version: String!
+    stop(stopId: ID!): Stop    
   }
 
   type Subscription {
     realtime(stopId: ID!): [Realtime]
+    stop(stopId: ID!): Stop
   }
 `;
 
