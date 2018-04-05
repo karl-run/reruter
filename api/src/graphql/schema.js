@@ -14,13 +14,8 @@ const typeDefs = `
     version: String!
   }
 
-  type Mutation {
-    example(message: String!): String!
-  }
-
   type Subscription {
     realtime(stopId: ID!): [Realtime]
-    exampleSub: String
   }
 `;
 
