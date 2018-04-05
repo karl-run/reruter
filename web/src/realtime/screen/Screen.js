@@ -6,6 +6,7 @@ import groupBy from 'lodash.groupby';
 import orderBy from 'lodash.orderby';
 import { DateTime } from 'luxon';
 
+import { ErrorBox } from '../../style/common';
 import { EntryHeader, LineNumber, LineName, Times, TimelistStyle, SingleTime, ExampleStops } from './ScreenStyle';
 
 const sub = gql`
@@ -78,9 +79,13 @@ export default ({ stopId }) => {
   }
   return (
     <Subscription subscription={sub} variables={{ stopId }}>
-      {({ loading, error, data, ...props }) => {
+      {({ loading, error, data }) => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>;
+
+        if (!data.realtime) {
+          return <ErrorBox>Fant ingen data. Er du sikker på at {stopId} er et gyldig stopp?</ErrorBox>
+        }
 
         return <Timelist times={data.realtime} />;
       }}

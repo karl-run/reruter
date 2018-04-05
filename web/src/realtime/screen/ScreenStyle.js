@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { flexCenter, flexCenterVertical } from '../../style/Mixins';
+import { flexCenter, flexCenterVertical } from '../../style/mixins';
 
 export const EntryHeader = styled.div`
   display: flex;
