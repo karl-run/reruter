@@ -9,7 +9,7 @@ let uris;
 if (process.env.NODE_ENV === 'production') {
   uris = {
     http: `https://${process.env.REACT_APP_API_URL}`,
-    ws: `wss://${process.env.REACT_APP_API_URL}`,
+    ws: `wss://${process.env.REACT_APP_API_URL}/subscriptions`,
   };
 } else {
   uris = {
