@@ -1,13 +1,14 @@
 import * as pollEngine from '../pollengine';
 import pubSub, { REALTIME_STOP, STOP } from '../pollengine/pubsub';
+import { getStop } from '../pollengine/fetcher';
 
 const rootResolver = {
   Query: {
     version: () => {
       return process.env.npm_package_version;
     },
-    stop: (_, { stopID }) => {
-      return { name: 'kek' };
+    stop: (_, { stopId }) => {
+      return getStop(stopId);
     },
   },
 
