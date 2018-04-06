@@ -11,6 +11,7 @@ cache:
     
 before_script:
   - yarn global add now
+  - npm install -g codecov
 
 script: echo "Building and deploying rerouter"
 
@@ -20,8 +21,9 @@ jobs:
       script: 
         - cd web
         - yarn
-        - yarn test
+        - yarn test --coverage
         - yarn build
+        - codecov -t $CODECOV_TOKEN
     - script: 
         - cd api
         - yarn
