@@ -11,7 +11,7 @@ cache:
     
 before_script:
   - yarn global add now
-  - npm install -g codecov
+  - yarn global add codecov
 
 script: echo "Building and deploying rerouter"
 
