@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "license": "MIT",
+  "jest": {
+    "testPathIgnorePatterns": ["/node_modules/", "dist"],
+    "collectCoverage": true,
+    "collectCoverageFrom": ["**/*.{js,jsx}", "!**/node_modules/**", "!**/dist/**"]
+  },
   "scripts": {
     "build": "rimraf ./dist/build && babel ./src --out-dir ./dist",
     "build:watch": "rimraf ./dist/build && babel -w ./src --out-dir ./dist",
     "start": "cross-env NODE_ENV=production node ./dist/index.js",
     "start:watch": "nodemon ./dist/index.js",
     "start:dev": "run-p build:watch start:watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "deploy": "now && now alias && now rm reruter-api --safe --yes",
     "deploy:ci":
       "now --regions bru --token $NOW_TOKEN && now alias --token $NOW_TOKEN && now rm reruter-api --token $NOW_TOKEN --safe --yes"
@@ -38,7 +45,11 @@
     "printWidth": 120
   },
   "devDependencies": {
+    "babel-core": "^7.0.0-0",
+    "babel-jest": "^22.4.3",
     "babel-preset-env": "^1.6.1",
-    "nodemon": "^1.17.1"
+    "jest": "^22.4.3",
+    "nodemon": "^1.17.1",
+    "regenerator-runtime": "^0.11.1"
   }
 }

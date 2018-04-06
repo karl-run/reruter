@@ -23,11 +23,13 @@ jobs:
         - yarn
         - yarn test --coverage
         - yarn build
-        - codecov -t $CODECOV_TOKEN
+        - codecov
     - script: 
         - cd api
         - yarn
+        - yarn test --coverage
         - yarn build
+        - codecov
     - stage: deploy
       script: 
         - cd web
