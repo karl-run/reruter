@@ -11,6 +11,7 @@ cache:
     
 before_script:
   - yarn global add now
+  - yarn global add codecov
 
 script: echo "Building and deploying rerouter"
 
@@ -20,12 +21,15 @@ jobs:
       script: 
         - cd web
         - yarn
-        - yarn test
+        - yarn test --coverage
         - yarn build
+        - codecov
     - script: 
         - cd api
         - yarn
+        - yarn test --coverage
         - yarn build
+        - codecov
     - stage: deploy
       script: 
         - cd web

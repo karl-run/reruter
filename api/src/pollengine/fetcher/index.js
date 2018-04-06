@@ -6,11 +6,11 @@ const rootUrl = process.env.RUTER_API_URL;
 const realtimePath = '/StopVisit/GetDepartures/';
 const makeUrl = stopId => `https://${rootUrl}${realtimePath}${stopId}`;
 
-if (!rootUrl) {
+if (process.env.NODE_ENV !== 'test' && !rootUrl) {
   throw new Error('No Ruter API URL supplied');
 }
 
-const mapToSimpleRealtime = fullRealtime =>
+export const mapToSimpleRealtime = fullRealtime =>
   fullRealtime.map(entry => ({
     name: entry.MonitoredVehicleJourney.DestinationName,
     line: entry.MonitoredVehicleJourney.LineRef,
