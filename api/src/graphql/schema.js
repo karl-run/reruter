@@ -3,25 +3,29 @@ import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 
 const typeDefs = `
+  type Departure {
+    aimed: String!
+    expected: String!
+  }
+
   type Line {
     number: String!
     name: String!
-    departures: [String]!
+    color: String!
+    departures: [Departure]!
   }
 
   type Platform {
-    id: Int!
     name: String!
     lines: [Line]!
   }
 
   type Stop {
-    #coordinates {
-    #  long: Float
-    #  lat: Float
-    #}
     name: String!
-    platforms: [Platform]
+    zone: String!
+    shortName: String!
+    district: String!
+    platforms: [Platform]!
   }
 
   type Realtime {

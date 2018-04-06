@@ -2,6 +2,8 @@ import fetch from 'node-fetch';
 
 import { GET } from './options';
 import { reset } from '../../../../web/node_modules/styled-reset/lib';
+import mapToStructuredStop from './mappers/departureMapper';
+import mapToMetadata from './mappers/metadataMapper';
 
 const rootUrl = process.env.RUTER_API_URL;
 const realtimePath = '/StopVisit/GetDepartures/';
@@ -20,21 +22,6 @@ export const mapToSimpleRealtime = fullRealtime =>
     platform: entry.MonitoredVehicleJourney.MonitoredCall.DeparturePlatformName,
   }));
 
-const buildStop = metadata => {
-  return {
-    name: metadata.Name,
-  };
-};
-
-const mapToCompleteStop = response => {
-  const { metadata, realtime } = response;
-
-  return {
-    ...buildStop(metadata),
-    // Todo add platofrms platforms
-  };
-};
-
 export const getRealtime = async stopId => {
   const url = makeUrl(stopId, realtimePath);
   log.debug(`Requesting ${url}`);
@@ -48,20 +35,30 @@ export const getRealtime = async stopId => {
   }
 };
 
-export const getStop = async stopId => {
-  const url = makeUrl(stopId, realtimePath);
+export const getMetadata = async stopId => {
   const metaUrl = makeUrl(stopId, metadataPath);
-  log.debug(`Requesting ${url} and ${url}`);
+
+  log.debug(`Requesting ${metaUrl}`);
 
   try {
-    return await Promise.all([fetch(url, GET), fetch(metaUrl, GET)])
-      .then(async result => {
-        const [realtime, metadata] = result;
+    return await fetch(metaUrl, GET)
+      .then(result => result.json())
+      .then(mapToMetadata);
+  } catch (error) {
+    log.error(`Unable to fetch metadata for stopId: "${stopId}", caused by:`, error.message);
+  }
+};
 
-        return { realtime: await realtime.json(), metadata: await metadata.json() };
-      })
-      .then(mapToCompleteStop);
-  } catch (erro) {
-    log.error(`Unable to fetch stopId: "${stopId}", caused by:`, erro.message);
+export const getStructuredRealtime = async stopId => {
+  const metaUrl = makeUrl(stopId, realtimePath);
+
+  log.debug(`Requesting ${metaUrl}`);
+
+  try {
+    return await fetch(metaUrl, GET)
+      .then(result => result.json())
+      .then(mapToStructuredStop);
+  } catch (error) {
+    log.error(`Unable to fetch metadata for stopId: "${stopId}", caused by:`, error.message);
   }
 };

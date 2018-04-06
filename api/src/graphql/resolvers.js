@@ -1,6 +1,6 @@
 import * as pollEngine from '../pollengine';
 import pubSub, { REALTIME_STOP, STOP } from '../pollengine/pubsub';
-import { getStop } from '../pollengine/fetcher';
+import { getStop, getMetadata, getRealtime, getStructuredRealtime } from '../pollengine/fetcher';
 
 const rootResolver = {
   Query: {
@@ -8,7 +8,7 @@ const rootResolver = {
       return process.env.npm_package_version;
     },
     stop: (_, { stopId }) => {
-      return getStop(stopId);
+      return getMetadata(stopId);
     },
   },
 
@@ -30,6 +30,12 @@ const rootResolver = {
       },
     },
   },
+
+  Stop: {
+    platforms: (obj, args) => {
+      return getStructuredRealtime(obj.stopId);
+    }
+  }
 };
 
 export default rootResolver;
