@@ -39,6 +39,8 @@
     "graphql-subscriptions": "^0.5.8",
     "graphql-tools": "^2.21.0",
     "http": "^0.0.0",
+    "lodash.groupby": "^4.6.0",
+    "lodash.orderby": "^4.6.0",
     "lodash.sortby": "^4.7.0",
     "node-fetch": "^2.1.2",
     "npm-run-all": "^4.1.2",
