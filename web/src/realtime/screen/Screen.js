@@ -2,8 +2,6 @@ import React from 'react';
 import { Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
-import groupBy from 'lodash.groupby';
-import orderBy from 'lodash.orderby';
 import { DateTime } from 'luxon';
 
 import { ErrorBox } from '../../style/common';
