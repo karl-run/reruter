@@ -2,26 +2,35 @@ import React from 'react';
 import { Subscription } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
-import groupBy from 'lodash.groupby';
-import orderBy from 'lodash.orderby';
 import { DateTime } from 'luxon';
 
 import { ErrorBox } from '../../style/common';
-import { EntryHeader, LineNumber, LineName, Times, TimelistStyle, SingleTime, ExampleStops } from './ScreenStyle';
+import { EntryHeader, LineNumber, LineName, Times, StopStyle, SingleTime, ExampleStops } from './ScreenStyle';
 
 const sub = gql`
   subscription onRealtimeUpdate($stopId: ID!) {
-    realtime(stopId: $stopId) {
+    stop(stopId: $stopId) {
       name
-      line
-      departure
-      platform
+      district
+      shortName
+      platforms {
+        name
+        lines {
+          number
+          color
+          name
+          departures {
+            aimed
+            expected
+          }
+        }
+      }
     }
   }
 `;
 
 const Time = ({ time }) => {
-  const date = DateTime.fromISO(time.departure);
+  const date = DateTime.fromISO(time.aimed);
   const minutes = Math.round(date.diffNow('minutes').minutes);
 
   let text;
@@ -36,27 +45,35 @@ const Time = ({ time }) => {
   return <SingleTime>{text}</SingleTime>;
 };
 
-const TimeEntry = ({ timeGroup }) => {
-  const [first] = timeGroup;
-
+const Line = ({ line }) => {
   return (
     <div>
       <EntryHeader>
-        <LineNumber>{first.line}</LineNumber>
-        <LineName>{first.name}</LineName>
+        <LineNumber color={line.color}>{line.number}</LineNumber>
+        <LineName color={line.color}>{line.name}</LineName>
       </EntryHeader>
-      <Times>{timeGroup.map(time => <Time key={time.departure} time={time} />)}</Times>
+      <Times>
+        {line.departures.map(departure => <Time key={departure.aimed + departure.expected} time={departure} />)}
+      </Times>
     </div>
   );
 };
 
-const createUniqueIdentifier = time => time.line + ' ' + time.name + ' ' + time.platform;
-
-const Timelist = ({ times }) => {
-  const grouped = groupBy(orderBy(times, 'time'), createUniqueIdentifier);
-
+const Platform = ({ platform }) => {
   return (
-    <TimelistStyle>{Object.keys(grouped).map(key => <TimeEntry key={key} timeGroup={grouped[key]} />)}</TimelistStyle>
+    <div>
+      <h5>Plattform {platform.name}</h5>
+      {platform.lines.map(line => <Line key={line.number + line.name} line={line} />)}
+    </div>
+  );
+};
+
+const Stop = ({ stop }) => {
+  return (
+    <StopStyle>
+      <h4>{stop.name}</h4>
+      {stop.platforms.map(platform => <Platform key={platform.name} platform={platform} />)}
+    </StopStyle>
   );
 };
 
@@ -83,11 +100,11 @@ export default ({ stopId }) => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error :(</p>;
 
-        if (!data.realtime) {
-          return <ErrorBox>Fant ingen data. Er du sikker på at {stopId} er et gyldig stopp?</ErrorBox>
+        if (!data.stop) {
+          return <ErrorBox>Fant ingen data. Er du sikker på at {stopId} er et gyldig stopp?</ErrorBox>;
         }
 
-        return <Timelist times={data.realtime} />;
+        return <Stop stop={data.stop} />;
       }}
     </Subscription>
   );

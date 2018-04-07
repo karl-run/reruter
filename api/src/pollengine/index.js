@@ -1,10 +1,11 @@
 import pubSub, { REALTIME_STOP } from './pubsub';
-import { getRealtime } from './fetcher';
+import { getMetadata, getRealtime } from './fetcher';
 
 const RATE = process.env.POLL_RATE || 60 * 60 * 1000 / 600;
 const FEED_RATE = process.env.FEED_RATE || 2000;
 
 const stops = {};
+const metadataCache = {};
 
 export const register = stopId => {
   if (stops[stopId]) return;
@@ -17,10 +18,20 @@ export const register = stopId => {
 export const updateStop = (stopId, i) => {
   return new Promise((resolve, reject) => {
     setTimeout(async () => {
+      if (!Object.keys(metadataCache).includes(stopId)) {
+        const result = await getMetadata(stopId);
+        metadataCache[stopId] = result;
+      }
+
       const result = await getRealtime(stopId);
 
+
+
       pubSub.publish(REALTIME_STOP + stopId, {
-        realtime: result,
+        stop: {
+         ...metadataCache[stopId],
+         platforms: result, 
+        },
       });
     }, i * FEED_RATE + Math.random() * (FEED_RATE / 2));
   });

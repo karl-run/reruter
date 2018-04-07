@@ -8,7 +8,6 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 
 import logging from './logging/logger';
 
-import { getRealtime } from './pollengine/fetcher';
 import { startPolling } from './pollengine';
 
 const DEFAULT_PORT = 4000;

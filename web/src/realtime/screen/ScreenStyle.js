@@ -8,7 +8,7 @@ export const EntryHeader = styled.div`
 `;
 
 export const LineNumber = styled.div`
-  background-color: red;
+  background-color: #${props => props.color};
   height: 24px;
   width: 24px;
   margin-right: 2px;
@@ -17,17 +17,18 @@ export const LineNumber = styled.div`
 `;
 
 export const LineName = styled.div`
-  background-color: red;
+  background-color: #${props => props.color};
   padding: 4px;
   flex: 1 0 auto;
   ${flexCenterVertical};
 `;
 
 export const Times = styled.div`
+  overflow: hidden;
   display: flex;
 `;
 
-export const TimelistStyle = styled.div`
+export const StopStyle = styled.div`
   max-width: 500px;
 `;
 
@@ -36,6 +37,7 @@ export const SingleTime = styled.div`
   min-width: 20px;
   margin: 0 4px;
   ${flexCenter};
+  flex: 0 0 auto;
 `;
 
 export const ExampleStops = styled.div`

@@ -9,8 +9,6 @@
     "apollo-link-ws": "^1.0.7",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
-    "lodash.groupby": "^4.6.0",
-    "lodash.orderby": "^4.6.0",
     "luxon": "^1.0.0",
     "react": "^16.3.1",
     "react-apollo": "^2.1.2",
@@ -30,8 +28,7 @@
     "start:dev": "react-scripts start",
     "test": "react-scripts test --env=jsdom",
     "deploy": "now && now alias && now rm reruter-web --safe --yes",
-    "deploy:ci":
-      "now --regions bru --token $NOW_TOKEN && now alias --token $NOW_TOKEN && now rm reruter-web --token $NOW_TOKEN --safe --yes"
+    "deploy:ci": "now --regions bru --token $NOW_TOKEN && now alias --token $NOW_TOKEN && now rm reruter-web --token $NOW_TOKEN --safe --yes"
   },
   "prettier": {
     "singleQuote": true,
