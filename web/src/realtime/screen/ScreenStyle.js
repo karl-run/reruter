@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { flexCenter, flexCenterVertical } from '../../style/mixins';
 
+export const ScreenStyle = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 export const EntryHeader = styled.div`
   display: flex;
   height: 24px;
@@ -30,6 +35,7 @@ export const Times = styled.div`
 
 export const StopStyle = styled.div`
   max-width: 500px;
+  margin: 8px;
 `;
 
 export const SingleTime = styled.div`

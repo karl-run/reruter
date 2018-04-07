@@ -5,7 +5,16 @@ import { Link } from 'react-router-dom';
 import { DateTime } from 'luxon';
 
 import { ErrorBox } from '../../style/common';
-import { EntryHeader, LineNumber, LineName, Times, StopStyle, SingleTime, ExampleStops } from './ScreenStyle';
+import {
+  ScreenStyle,
+  EntryHeader,
+  LineNumber,
+  LineName,
+  Times,
+  StopStyle,
+  SingleTime,
+  ExampleStops,
+} from './ScreenStyle';
 
 const sub = gql`
   subscription onRealtimeUpdate($stopId: ID!) {
@@ -77,6 +86,21 @@ const Stop = ({ stop }) => {
   );
 };
 
+const Timetable = ({ stopId }) => (
+  <Subscription subscription={sub} variables={{ stopId }}>
+    {({ loading, error, data }) => {
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>Error :(</p>;
+
+      if (!data.stop) {
+        return <ErrorBox>Fant ingen data. Er du sikker på at {stopId} er et gyldig stopp?</ErrorBox>;
+      }
+
+      return <Stop stop={data.stop} />;
+    }}
+  </Subscription>
+);
+
 export default ({ stopId }) => {
   if (!stopId) {
     return (
@@ -94,18 +118,16 @@ export default ({ stopId }) => {
       </ExampleStops>
     );
   }
+
+  if (stopId.indexOf(',')) {
+    const stopIds = stopId.split(',');
+
+    return <ScreenStyle>{stopIds.map(id => <Timetable key={id} stopId={id} />)}</ScreenStyle>;
+  }
+
   return (
-    <Subscription subscription={sub} variables={{ stopId }}>
-      {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>;
-
-        if (!data.stop) {
-          return <ErrorBox>Fant ingen data. Er du sikker på at {stopId} er et gyldig stopp?</ErrorBox>;
-        }
-
-        return <Stop stop={data.stop} />;
-      }}
-    </Subscription>
+    <ScreenStyle>
+      <Timetable stopId={stopId} />
+    </ScreenStyle>
   );
 };
