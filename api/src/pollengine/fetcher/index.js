@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 
 import { GET } from './options';
-import { reset } from '../../../../web/node_modules/styled-reset/lib';
 import mapToStructuredStop from './mappers/departureMapper';
 import mapToMetadata from './mappers/metadataMapper';
 
