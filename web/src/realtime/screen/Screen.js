@@ -30,7 +30,6 @@ const sub = gql`
 `;
 
 const Time = ({ time }) => {
-  console.log(time);
   const date = DateTime.fromISO(time.aimed);
   const minutes = Math.round(date.diffNow('minutes').minutes);
 
@@ -53,28 +52,27 @@ const Line = ({ line }) => {
         <LineNumber color={line.color}>{line.number}</LineNumber>
         <LineName color={line.color}>{line.name}</LineName>
       </EntryHeader>
-      <Times>{line.departures.map(departure => <Time time={departure} />)}</Times>
+      <Times>
+        {line.departures.map(departure => <Time key={departure.aimed + departure.expected} time={departure} />)}
+      </Times>
     </div>
   );
 };
 
 const Platform = ({ platform }) => {
-  console.log(platform);
   return (
     <div>
       <h5>Plattform {platform.name}</h5>
-      {platform.lines.map(line => <Line line={line} />)}
+      {platform.lines.map(line => <Line key={line.number + line.name} line={line} />)}
     </div>
   );
 };
 
 const Stop = ({ stop }) => {
-  console.log(stop);
-
   return (
     <StopStyle>
       <h4>{stop.name}</h4>
-      {stop.platforms.map(platform => <Platform platform={platform} />)}
+      {stop.platforms.map(platform => <Platform key={platform.name} platform={platform} />)}
     </StopStyle>
   );
 };
