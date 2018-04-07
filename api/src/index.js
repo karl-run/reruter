@@ -17,7 +17,7 @@ const URL = PROD ? process.env.API_URL : 'localhost';
 const WS_URL = PROD ? `wss://${URL}/subscriptions` : `ws://${URL}:${PORT}/subscriptions`;
 
 global.log = logging;
-logging.level = 'debug';
+logging.level = PROD ? 'info' : 'debug';
 
 const app = express();
 
