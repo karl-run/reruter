@@ -22,19 +22,6 @@ export const mapToSimpleRealtime = fullRealtime =>
     platform: entry.MonitoredVehicleJourney.MonitoredCall.DeparturePlatformName,
   }));
 
-export const getRealtime = async stopId => {
-  const url = makeUrl(stopId, realtimePath);
-  log.debug(`Requesting ${url}`);
-
-  try {
-    return await fetch(url, GET)
-      .then(result => result.json())
-      .then(mapToSimpleRealtime);
-  } catch (erro) {
-    log.error(`Unable to fetch stopId: "${stopId}", caused by:`, erro.message);
-  }
-};
-
 export const getMetadata = async stopId => {
   const metaUrl = makeUrl(stopId, metadataPath);
 
@@ -49,7 +36,7 @@ export const getMetadata = async stopId => {
   }
 };
 
-export const getStructuredRealtime = async stopId => {
+export const getRealtime = async stopId => {
   const metaUrl = makeUrl(stopId, realtimePath);
 
   log.debug(`Requesting ${metaUrl}`);

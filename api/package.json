@@ -4,9 +4,16 @@
   "main": "src/index.js",
   "license": "MIT",
   "jest": {
-    "testPathIgnorePatterns": ["/node_modules/", "dist"],
-    "collectCoverage": true,
-    "collectCoverageFrom": ["**/*.{js,jsx}", "!**/node_modules/**", "!**/dist/**"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "dist"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/dist/**"
+    ],
+    "setupTestFrameworkScriptFile": "./.jest.js"
   },
   "scripts": {
     "build": "rimraf ./dist/build && babel ./src --out-dir ./dist",
@@ -50,7 +57,9 @@
     "babel-core": "^7.0.0-0",
     "babel-jest": "^22.4.3",
     "babel-preset-env": "^1.6.1",
+    "fetch-mock": "^6.3.0",
     "jest": "^22.4.3",
+    "jest-fetch-mock": "^1.5.0",
     "nodemon": "^1.17.1",
     "regenerator-runtime": "^0.11.1"
   }
